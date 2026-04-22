@@ -21,7 +21,7 @@ type Schedule struct {
 	UpdatedAt    time.Time  `json:"-"`
 	DeletedAt    *time.Time `sql:"index" json:"-"`
 	TechnicianID uint      `gorm:"not null" json:"technician_id" validate:"required"`
-	Technician   Technician `gorm:"foreignkey:TechnicianID" json:"technician,omitempty"`
+	Technician   Technician `gorm:"foreignkey:TechnicianID" json:"technician,omitempty" validate:"-"`
 	Date         string     `gorm:"not null;type:date" json:"date" validate:"required"`
 	StartTime    string     `gorm:"not null" json:"start_time" validate:"required"`
 	EndTime      string     `gorm:"not null" json:"end_time" validate:"required"`
@@ -42,7 +42,7 @@ type Appointment struct {
 	UpdatedAt    time.Time         `json:"-"`
 	DeletedAt    *time.Time        `sql:"index" json:"-"`
 	TechnicianID uint             `gorm:"not null" json:"technician_id" validate:"required"`
-	Technician   Technician        `gorm:"foreignkey:TechnicianID" json:"technician,omitempty"`
+	Technician   Technician        `gorm:"foreignkey:TechnicianID" json:"technician,omitempty" validate:"-"`
 	CustomerName string            `gorm:"not null" json:"customer_name" validate:"required"`
 	CustomerPhone string           `gorm:"not null" json:"customer_phone" validate:"required,phone"`
 	Date         string            `gorm:"not null;type:date" json:"date" validate:"required"`

@@ -64,7 +64,7 @@ func CreateSchedule(c *gin.Context) {
 		return
 	}
 
-	if schedule.StartTime >= schedule.EndTime {
+	if timeToMinutes(schedule.StartTime) >= timeToMinutes(schedule.EndTime) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"message": "开始时间必须早于结束时间",
@@ -163,7 +163,7 @@ func UpdateSchedule(c *gin.Context) {
 		schedule.TechnicianID = input.TechnicianID
 	}
 
-	if schedule.StartTime >= schedule.EndTime {
+	if timeToMinutes(schedule.StartTime) >= timeToMinutes(schedule.EndTime) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"message": "开始时间必须早于结束时间",
@@ -257,6 +257,16 @@ func isValidTimeFormat(timeStr string) bool {
 	}
 
 	return true
+}
+
+func timeToMinutes(timeStr string) int {
+	parts := strings.Split(timeStr, ":")
+	if len(parts) != 2 {
+		return 0
+	}
+	hour, _ := strconv.Atoi(parts[0])
+	minute, _ := strconv.Atoi(parts[1])
+	return hour*60 + minute
 }
 
 func GetAvailableSlots(c *gin.Context) {
