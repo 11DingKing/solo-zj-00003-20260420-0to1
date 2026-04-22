@@ -26,7 +26,7 @@ export default function MyAppointmentsPage() {
         setAppointments(response.data.data)
         setSearched(true)
         if (response.data.data.length === 0) {
-          toast.info('暂无预约记录')
+          toast('暂无预约记录')
         }
       }
     } catch (error) {
