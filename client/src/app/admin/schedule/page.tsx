@@ -6,6 +6,11 @@ import toast from 'react-hot-toast'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 
+const timeToMinutes = (timeStr: string): number => {
+  const [hour, minute] = timeStr.split(':').map(Number)
+  return hour * 60 + minute
+}
+
 export default function SchedulePage() {
   const [technicians, setTechnicians] = useState<Technician[]>([])
   const [schedules, setSchedules] = useState<Schedule[]>([])
@@ -17,16 +22,16 @@ export default function SchedulePage() {
   const [newSchedule, setNewSchedule] = useState({
     technician_id: '',
     date: dayjs().format('YYYY-MM-DD'),
-    start_time: '9:0',
-    end_time: '12:0',
+    start_time: '09:00',
+    end_time: '12:00',
   })
 
   const timeOptions = [
-    '9:0', '9:30', '10:0', '10:30', '11:0', '11:30',
-    '12:0', '12:30', '13:0', '13:30', '14:0', '14:30',
-    '15:0', '15:30', '16:0', '16:30', '17:0', '17:30',
-    '18:0', '18:30', '19:0', '19:30', '20:0', '20:30',
-    '21:0',
+    '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
+    '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
+    '18:00', '18:30', '19:00', '19:30', '20:00', '20:30',
+    '21:00',
   ]
 
   useEffect(() => {
@@ -76,7 +81,7 @@ export default function SchedulePage() {
       return
     }
 
-    if (newSchedule.start_time >= newSchedule.end_time) {
+    if (timeToMinutes(newSchedule.start_time) >= timeToMinutes(newSchedule.end_time)) {
       toast.error('开始时间必须早于结束时间')
       return
     }
@@ -96,8 +101,8 @@ export default function SchedulePage() {
         setNewSchedule({
           technician_id: '',
           date: dayjs().format('YYYY-MM-DD'),
-          start_time: '9:0',
-          end_time: '12:0',
+          start_time: '09:00',
+          end_time: '12:00',
         })
       }
     } catch (error: any) {
