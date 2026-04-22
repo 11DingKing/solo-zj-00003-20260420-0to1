@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -63,6 +64,9 @@ func CreateSchedule(c *gin.Context) {
 		})
 		return
 	}
+
+	schedule.StartTime = normalizeTimeFormat(schedule.StartTime)
+	schedule.EndTime = normalizeTimeFormat(schedule.EndTime)
 
 	if timeToMinutes(schedule.StartTime) >= timeToMinutes(schedule.EndTime) {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -267,6 +271,16 @@ func timeToMinutes(timeStr string) int {
 	hour, _ := strconv.Atoi(parts[0])
 	minute, _ := strconv.Atoi(parts[1])
 	return hour*60 + minute
+}
+
+func normalizeTimeFormat(timeStr string) string {
+	parts := strings.Split(timeStr, ":")
+	if len(parts) != 2 {
+		return timeStr
+	}
+	hour, _ := strconv.Atoi(parts[0])
+	minute, _ := strconv.Atoi(parts[1])
+	return fmt.Sprintf("%02d:%02d", hour, minute)
 }
 
 func GetAvailableSlots(c *gin.Context) {

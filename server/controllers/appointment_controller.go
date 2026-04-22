@@ -61,6 +61,9 @@ func CreateAppointment(c *gin.Context) {
 		return
 	}
 
+	appointment.StartTime = normalizeTime(appointment.StartTime)
+	appointment.EndTime = normalizeTime(appointment.EndTime)
+
 	var count int
 	config.DB.Model(&models.Appointment{}).Where(
 		"technician_id = ? AND date = ? AND start_time = ? AND status IN ?",
