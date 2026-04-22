@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -60,5 +61,5 @@ func parseTime(timeStr string) (hour, minute int) {
 }
 
 func formatTime(hour, minute int) string {
-	return strconv.Itoa(hour) + ":" + strconv.Itoa(minute)
+	return fmt.Sprintf("%02d:%02d", hour, minute)
 }

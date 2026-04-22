@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { appointmentApi, technicianApi, Appointment, Technician } from '@/lib/api'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import dayjs from 'dayjs'
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([])
@@ -303,7 +304,7 @@ export default function AppointmentsPage() {
                   return (
                     <tr key={appointment.id} className="hover:bg-gray-50">
                       <td className="px-4 py-4 whitespace-nowrap text-sm">
-                        {appointment.date}
+                        {dayjs(appointment.date).format('YYYY年MM月DD日')}
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm">
                         {appointment.start_time} - {appointment.end_time}

@@ -217,7 +217,7 @@ export default function BookingPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">日期：</span>
-                      <span className="font-medium">{selectedDate}</span>
+                      <span className="font-medium">{dayjs(selectedDate).format('YYYY年MM月DD日')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">时间段：</span>
